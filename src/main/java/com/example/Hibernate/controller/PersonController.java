@@ -25,13 +25,13 @@ public class PersonController {
 
     @GetMapping("/persons/below-age")
     public ResponseEntity<List<Person>> getPersonsBelowAge(@RequestParam("age") Integer age) {
-        return ResponseEntity.ok(personCrudRepository.findAllPersonByAgeLessThanOrderByAge(age));
+        return ResponseEntity.ok(personCrudRepository.findAllPersonByIdAgeLessThanOrderByIdAge(age));
     }
 
     @GetMapping("/persons/by-name-or-surname")
     public ResponseEntity<List<Person>> getPersonsByNameOrSurname(@RequestParam(value = "name",required = false) String name,
                                                                   @RequestParam(value = "surname",required = false) String surname) {
-        return ResponseEntity.ok(personCrudRepository.findAllPersonByNameOrSurname(name, surname));
+        return ResponseEntity.ok(personCrudRepository.findAllPersonByIdNameOrIdSurname(name, surname));
     }
 
 }
