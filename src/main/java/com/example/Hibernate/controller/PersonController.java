@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import java.util.List;
 
 @RestController
@@ -32,6 +31,11 @@ public class PersonController {
     public ResponseEntity<List<Person>> getPersonsByNameOrSurname(@RequestParam(value = "name",required = false) String name,
                                                                   @RequestParam(value = "surname",required = false) String surname) {
         return ResponseEntity.ok(personCrudRepository.findAllPersonByIdNameOrIdSurname(name, surname));
+    }
+
+    @GetMapping("/hello")
+    public ResponseEntity<String> getHello() {
+        return ResponseEntity.ok("Hello");
     }
 
 }
