@@ -39,27 +39,15 @@ public class PersonController {
         return ResponseEntity.ok(personCrudRepository.findAllPersonByIdAgeLessThanOrderByIdAge(age));
     }
 
-    @PreAuthorize("hasAnyAuthority('DELETE')")
+    @PreAuthorize("hasAuthority('DELETE') and (#name == authentication.principal.username)")
     @GetMapping("/persons/by-name-or-surname")
     public ResponseEntity<List<Person>> getPersonsByNameOrSurname(@RequestParam(value = "name",required = false) String name,
                                                                   @RequestParam(value = "surname",required = false) String surname) {
-        if (StringUtils.isNotBlank(name)) {
-            checkUserName(name);
-        }
-
         return ResponseEntity.ok(personCrudRepository.findAllPersonByIdNameOrIdSurname(name, surname));
     }
 
     @GetMapping("/hello")
     public ResponseEntity<String> getHelloPublic() {
         return ResponseEntity.ok("Hello (public)");
-    }
-
-    private void checkUserName(String queryName) {
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        User user = (User) securityContext.getAuthentication().getPrincipal();
-        if (!Objects.equals(queryName, user.getUsername())) {
-            throw new AccessDeniedException("Unauthorized user search attempted");
-        }
     }
 }
